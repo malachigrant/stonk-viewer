@@ -1,5 +1,3 @@
 import StockSocket from 'stocksocket';
 
-const StonkManager = () => {
-  
-}
+export default { addTicker: StockSocket.addTicker };

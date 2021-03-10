@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import StonkList from 'StonkList';
+import { addTicker } from 'StonkManager';
 
-export const App = () => {
+export const StonkViewer = () => {
   const Style = css`
     margin: 1em auto 0 auto;
     padding: 1em 2em;
@@ -12,11 +12,7 @@ export const App = () => {
       color: #ffffff;
     }
   `;
-  return (
-    <div css={Style}>
-      <StonkList />
-    </div>
-  );
+  return <div css={Style}>Welcome to my template!</div>;
 };
 
-export default App;
+export default StonkViewer;
