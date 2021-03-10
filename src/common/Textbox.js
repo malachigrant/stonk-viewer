@@ -3,7 +3,7 @@ import { jsx, css } from '@emotion/core';
 
 export const Textbox = ({ value, onChanged }) => {
   const Style = css`
-    padding: 1em;
+    padding: 0.25em;
     border-radius: 0.2em;
     border: 1px solid #ddd;
     width: 250px;
@@ -14,7 +14,7 @@ export const Textbox = ({ value, onChanged }) => {
       css={Style}
       value={value || ''}
       onChange={(e) => {
-        onChanged(e.target);
+        onChanged(e.target.value);
       }}
     ></input>
   );

@@ -1,18 +1,17 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
-import { addTicker } from 'StonkManager';
 
-export const StonkViewer = () => {
+export const StonkViewer = ({ symbol, price }) => {
   const Style = css`
-    margin: 1em auto 0 auto;
-    padding: 1em 2em;
+    padding: 0.5em;
     border-radius: 0.2em;
-    &:hover {
-      background-color: #000000;
-      color: #ffffff;
-    }
+    display: flex;
+    flex-direction: column;
   `;
-  return <div css={Style}>Welcome to my template!</div>;
+  return <div css={Style}>
+    <div>{symbol}</div>
+    <div>{price}</div>
+  </div>;
 };
 
 export default StonkViewer;

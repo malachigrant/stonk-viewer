@@ -12,8 +12,10 @@
     "test": "jest",
     "lint": "eslint .",
     "pretty": "prettier . --write",
-    "dev": "webpack-dev-server src/main.js",
-    "start": "yarn dev"
+    "client": "webpack-dev-server src/main.js",
+    "server": "node server/main.js",
+    "dev": "yarn start",
+    "start": "concurrently \"yarn client\" \"yarn server\""
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",
@@ -24,6 +26,7 @@
     "@emotion/babel-preset-css-prop": "^10.0.27",
     "babel-jest": "^26.3.0",
     "babel-loader": "^8.1.0",
+    "concurrently": "^6.0.0",
     "eslint": "^7.7.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-jest": "^23.20.0",
@@ -43,7 +46,8 @@
   "dependencies": {
     "@emotion/core": "^10.0.35",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "socket.io-client": "^4.0.0"
   },
   "husky": {
     "hooks": {
