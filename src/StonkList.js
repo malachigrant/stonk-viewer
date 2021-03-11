@@ -9,19 +9,26 @@ import { StonkViewer } from 'StonkViewer';
 const reducer = (state, action) => {
   switch (action.type) {
     case 'set':
-      return { ...state, [action.symbol]: [action.price]}
+      let obj;
+      if (state[action.symbol]) {
+        obj = { ...state[action.symbol], ...action };
+      } else {
+        obj = { ...action };
+      }
+      delete obj.type;
+      return { ...state, [action.symbol]: obj };
     default:
       throw new Error();
   }
-}
+};
 
 export const StonkList = () => {
   const [symbol, setSymbol] = useState('');
   const [stonks, dispatch] = useReducer(reducer, {});
-  
+
   const setStonk = (data) => {
-    dispatch({type: 'set', ...data });
-  }
+    dispatch({ type: 'set', ...data });
+  };
 
   const ColumnStyle = css`
     margin: 1em auto 0 auto;
@@ -35,13 +42,15 @@ export const StonkList = () => {
     flex-direction: row;
   `;
   const addStonk = (symbol) => {
-    setStonk({ symbol, price: '???' });
+    if (symbol.trim() === '') {
+      return;
+    }
+    setStonk({ symbol, price: '' });
     setSymbol('');
-    addTicker(symbol, (price) => {
-      setStonk({ symbol, price });
+    addTicker(symbol, (data) => {
+      setStonk({ symbol, ...data });
     });
   };
-  console.log(stonks);
   return (
     <div css={ColumnStyle}>
       <div css={RowStyle}>
@@ -52,7 +61,11 @@ export const StonkList = () => {
         {Object.keys(stonks).map((symbol, i) => {
           console.log(symbol, i);
           return (
-            <StonkViewer symbol={symbol} price={stonks[symbol]} />
+            <StonkViewer
+              symbol={symbol}
+              price={stonks[symbol].price}
+              previousClose={stonks[symbol].previousClose}
+            />
           );
         })}
       </div>

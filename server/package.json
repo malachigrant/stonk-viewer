@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "http": "^0.0.1-security",
     "socket.io": "^4.0.0",
-    "stocksocket": "^1.1.2"
+    "stocksocket": "^1.1.2",
+    "yahoo-finance": "^0.3.7"
   }
 }
