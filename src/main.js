@@ -4,13 +4,7 @@ import ReactDOM from 'react-dom';
 
 import App from 'App';
 
-const AppStyle = css`
-  display: flex;
-`;
-
 ReactDOM.render(
-  <div css={AppStyle}>
-    <App />
-  </div>,
+  <App />,
   document.getElementById('root')
 );

@@ -9,6 +9,7 @@ export const StonkViewer = ({ symbol, price, previousClose }) => {
     flex-direction: column;
     border: 1px solid #ddd;
     margin: 0.5em;
+    min-width: 120px;
   `;
   const ColorStyle = css`
     color: ${price > previousClose ? '#00dd00' : '#dd0000'};

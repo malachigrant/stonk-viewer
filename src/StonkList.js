@@ -2,74 +2,80 @@
 import { jsx, css } from '@emotion/core';
 import Textbox from 'common/Textbox';
 import Button from 'common/Button';
-import { useState, useReducer } from 'react';
-import { addTicker } from 'StonkManager';
+import { useState, useReducer, useEffect } from 'react';
+import { addTickers, loadList } from 'StonkManager';
 import { StonkViewer } from 'StonkViewer';
+import Row from 'common/layout/Row';
+import { Card } from 'common/layout/Card';
 
 const reducer = (state, action) => {
   switch (action.type) {
     case 'set':
-      let obj;
-      if (state[action.symbol]) {
-        obj = { ...state[action.symbol], ...action };
+      const index = state.findIndex((stonk) => (stonk.symbol === action.data.symbol))
+      if (index > -1) {
+        const returnValue = [ ...state ];
+        returnValue[index] = { ...returnValue[index], ...action.data };
+        return returnValue;
       } else {
-        obj = { ...action };
+        return [ ...state, { ...action.data } ];
       }
-      delete obj.type;
-      return { ...state, [action.symbol]: obj };
     default:
       throw new Error();
   }
 };
 
-export const StonkList = () => {
+export const StonkList = ({ name }) => {
   const [symbol, setSymbol] = useState('');
-  const [stonks, dispatch] = useReducer(reducer, {});
+  const [stonks, dispatch] = useReducer(reducer, []);
+  useEffect(() => {
+    if (name) {
+      loadList(name, setStonk);
+    }
+  }, [name])
 
   const setStonk = (data) => {
-    dispatch({ type: 'set', ...data });
+    dispatch({ type: 'set', data });
   };
-
-  const ColumnStyle = css`
-    margin: 1em auto 0 auto;
-    padding: 1em;
-    border-radius: 0.5em;
-    display: flex;
-    flex-direction: column;
-  `;
-  const RowStyle = css`
+  
+  const GridStyle = css`
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 80vw;
+    min-width: 50vw;
   `;
   const addStonk = (symbol) => {
     if (symbol.trim() === '') {
       return;
     }
-    setStonk({ symbol, price: '' });
-    setSymbol('');
-    addTicker(symbol, (data) => {
-      setStonk({ symbol, ...data });
+    const list = symbol.toUpperCase().split(/\s*,\s*/g);
+    /*addTickers(list, (data) => {
+      setStonk({ ...data });
+    });*/
+    addTickers(list, setStonk);
+    list.forEach((symbol) => {
+      setStonk({ symbol, price: '' });
     });
+    setSymbol('');
   };
   return (
-    <div css={ColumnStyle}>
-      <div css={RowStyle}>
-        <Textbox value={symbol} onChanged={setSymbol} />
+    <Card>
+      <Row centered>
+        <Textbox value={symbol} onChanged={setSymbol} onSubmit={() => addStonk(symbol)} />
         <Button text="Add" onClick={() => addStonk(symbol)} />
-      </div>
-      <div css={RowStyle}>
-        {Object.keys(stonks).map((symbol, i) => {
-          console.log(symbol, i);
+      </Row>
+      <div css={GridStyle}>
+        {stonks.map((stonk, i) => {
           return (
             <StonkViewer
-              symbol={symbol}
-              price={stonks[symbol].price}
-              previousClose={stonks[symbol].previousClose}
+              symbol={stonk.symbol}
+              price={stonk.price}
+              previousClose={stonk.previousClose}
             />
           );
         })}
       </div>
-    </div>
+    </Card>
   );
 };
 
