@@ -1,6 +1,11 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 
+const roundTo = (num, precision) => {
+  const mult = Math.pow(10, precision || 0)
+  return Math.round(num * mult) / mult;
+}
+
 export const StonkViewer = ({ symbol, price, previousClose }) => {
   const Style = css`
     padding: 0.5em;
@@ -14,12 +19,14 @@ export const StonkViewer = ({ symbol, price, previousClose }) => {
   const ColorStyle = css`
     color: ${price > previousClose ? '#00dd00' : '#dd0000'};
   `;
+
+  const priceChange = roundTo(price - previousClose, 2);
+  const pct = roundTo(priceChange/previousClose*100, 2);
+
   return (
     <div css={Style}>
-      <div>{symbol}</div>
-      <div css={ColorStyle}>{`${price} (${
-        Math.round((10000 * price) / previousClose - 10000) / 100
-      }%)`}</div>
+      <div>{`${symbol} - ${price}`}</div>
+      <div css={ColorStyle}>{`${priceChange} (${pct}%)`}</div>
     </div>
   );
 };

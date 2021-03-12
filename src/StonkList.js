@@ -71,6 +71,7 @@ export const StonkList = ({ name }) => {
               symbol={stonk.symbol}
               price={stonk.price}
               previousClose={stonk.previousClose}
+              key={i}
             />
           );
         })}
