@@ -1,5 +1,8 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const webpack = require('webpack');
+
+const isDevServer = process.env.WEBPACK_DEV_SERVER;
 
 module.exports = {
   entry: 'main.js',
@@ -75,7 +78,7 @@ module.exports = {
     modules: [path.resolve('./src'), 'node_modules'],
   },
   output: {
-    path: __dirname + '/dist',
+    path: __dirname + '/server/dist',
     publicPath: '/',
     filename: 'bundle.js',
   },
@@ -84,9 +87,12 @@ module.exports = {
       template: require('html-webpack-template'),
       appMountId: 'root',
     }),
+    new webpack.DefinePlugin({
+      SOCKET_URL: isDevServer ? '\'http://localhost:3000\'' : '',
+    }),
   ],
   devServer: {
-    contentBase: './dist',
+    contentBase: './server/dist',
     hot: true,
     open: true,
   },

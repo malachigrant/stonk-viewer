@@ -2,18 +2,27 @@ const StockSocket = require('stocksocket');
 const yahoo = require('yahoo-finance');
 const each = require('async/each');
 const fs = require('fs');
-const app = require('express')();
+const express = require('express');
+const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
   cors: {
-    origin: 'http://localhost:8080',
+    origin: /http:\/\/(?:localhost|192.168.\d{0,3}.\d{0,3}):(?:3000|8080)/,
     methods: ['GET', 'POST'],
   },
 });
 const port = 3000;
 
+app.use(express.static(`${__dirname}/dist`));
+
+app.use('/admin', express.static(`${__dirname}/admin`));
+
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.sendFile(__dirname + '/dist/index.html');
+});
+
+app.get('/admin/stonks', (req, res) => {
+  res.send(`<pre>${JSON.stringify(stonkMap, null, 2)}</pre>`);
 });
 
 const sockets = [];
@@ -36,6 +45,9 @@ const addTicker = (socket, symbol) => {
         modules: ['price'],
       },
       (err, quote) => {
+        if (err) {
+          return;
+        }
         // console.log(quote);
         const data = {
           price: quote.price.regularMarketPrice,

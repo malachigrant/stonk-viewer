@@ -1,5 +1,5 @@
 import { io } from 'socket.io-client';
-const socket = io('http://localhost:3000');
+const socket = io(SOCKET_URL);
 const map = {};
 
 export const addTicker = (symbol, cb) => {
