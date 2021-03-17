@@ -1,10 +1,15 @@
 /** @jsx jsx */
-import { jsx, css } from '@emotion/core';
+import { jsx, css, Global } from '@emotion/core';
 import ReactDOM from 'react-dom';
+import React from 'react';
 
 import App from 'App';
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+const GlobalStyle = css`
+  * {
+    font-family: Arial;
+    box-sizing: border-box;
+  }
+`;
+
+ReactDOM.render(<><Global styles={GlobalStyle} /><App /></>, document.getElementById('root'));

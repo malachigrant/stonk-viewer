@@ -1,5 +1,3 @@
 {
-  "symbols": [
-    "TSLA", "AAPL", "GOOG", "AMZN", "MSFT"
-  ]
+  "symbols": ["TSLA", "AAPL", "GOOG", "AMZN", "MSFT"]
 }

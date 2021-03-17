@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
+import { PropTypes } from 'prop-types';
 
 export const Textbox = ({ value, onChanged, onSubmit }) => {
   const Style = css`
@@ -19,11 +20,16 @@ export const Textbox = ({ value, onChanged, onSubmit }) => {
         onChanged(e.target.value);
       }}
       onKeyDown={(e) => {
-        if (e.key === 'Enter')
-          onSubmit();
+        if (e.key === 'Enter') onSubmit();
       }}
     ></input>
   );
+};
+
+Textbox.propTypes = {
+  value: PropTypes.string,
+  onChanged: PropTypes.function,
+  onSubmit: PropTypes.function,
 };
 
 export default Textbox;

@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
+import { PropTypes } from 'prop-types';
 
 export const Button = ({ text, onClick }) => {
   const Style = css`
@@ -19,6 +20,11 @@ export const Button = ({ text, onClick }) => {
       {text}
     </div>
   );
+};
+
+Button.propTypes = {
+  text: PropTypes.string,
+  onClick: PropTypes.function,
 };
 
 export default Button;

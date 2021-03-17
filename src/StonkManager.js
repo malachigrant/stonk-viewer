@@ -2,30 +2,47 @@ import { io } from 'socket.io-client';
 const socket = io(SOCKET_URL);
 const map = {};
 
+const updateMap = (symbol, cb) => {
+  map[symbol] = map[symbol] ? [...map[symbol], cb] : [cb];
+};
+
 export const addTicker = (symbol, cb) => {
   socket.emit('addStonk', symbol);
-  map[symbol] = cb;
+  updateMap(symbol, cb);
 };
 
 export const addTickers = (list, cb) => {
   socket.emit('addStonks', list);
-  list.forEach((stonk) => {
-    map[stonk] = cb;
-  })
-}
+  list.forEach((symbol) => {
+    updateMap(symbol, cb);
+  });
+};
 
 export const loadList = (name, cb) => {
   socket.emit('loadList', name, (list) => {
-    list.forEach((stonk) => {
-      cb({ symbol: stonk, price: '...' });
-      map[stonk] = cb; // TODO: this may cause issues if we have the same ticker in multiple lists...
-    })
+    list.forEach((symbol) => {
+      cb({ symbol, price: '...' });
+      updateMap(symbol, cb);
+    });
   });
-}
+};
+
+export const loadDashboard = (name, cb, initCb) => {
+  socket.emit('loadDashboard', name, (data) => {
+    initCb(data);
+    data.lists.forEach((listData) => {
+      listData.symbols.forEach((symbol) => {
+        updateMap(symbol, cb);
+      });
+    });
+  });
+};
 
 socket.on('dataChanged', (data) => {
-  if (typeof map[data.symbol] === 'function') {
+  if (map[data.symbol]) {
     const returnValue = { ...data };
-    map[data.symbol](returnValue);
+    map[data.symbol].forEach((cb) => {
+      cb(returnValue);
+    });
   }
 });

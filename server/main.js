@@ -1,8 +1,8 @@
 const StockSocket = require('stocksocket');
 const yahoo = require('yahoo-finance');
 const each = require('async/each');
-const fs = require('fs');
 const express = require('express');
+const { loadList, loadDashboard } = require('./StorageManager');
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
@@ -17,10 +17,6 @@ app.use(express.static(`${__dirname}/dist`));
 
 app.use('/admin', express.static(`${__dirname}/admin`));
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/dist/index.html');
-});
-
 app.get('/admin/stonks', (req, res) => {
   res.send(`<pre>${JSON.stringify(stonkMap, null, 2)}</pre>`);
 });
@@ -33,10 +29,9 @@ const addTicker = (socket, symbol) => {
     stonkMap[symbol] = {};
     stonkMap[symbol].sockets = [socket.id];
     StockSocket.addTicker(symbol, (data) => {
-      const stonkData = { ...data }
-      stonkData.price = stonkData.price.replace(',', '');
-      stonkData.price = parseFloat(stonkData.price);
+      const stonkData = { ...data };
       stonkMap[symbol].price = stonkData.price;
+      stonkMap[symbol].lastUpdated = Date.now();
       sendToSockets(symbol, stonkData);
     });
     yahoo.quote(
@@ -48,11 +43,10 @@ const addTicker = (socket, symbol) => {
         if (err) {
           return;
         }
-        // console.log(quote);
         const data = {
           price: quote.price.regularMarketPrice,
           previousClose: quote.price.regularMarketPreviousClose,
-        }
+        };
         stonkMap[symbol] = { ...stonkMap[symbol], ...data };
         socket.emit('dataChanged', { symbol, ...data });
       }
@@ -62,13 +56,12 @@ const addTicker = (socket, symbol) => {
     socket.emit('dataChanged', {
       symbol,
       price: stonkMap[symbol].price,
-      previousClose: stonkMap[symbol].previousClose
+      previousClose: stonkMap[symbol].previousClose,
     });
   }
 };
 
 const sendToSockets = (symbol, data) => {
-  // console.log(data);
   if (stonkMap[symbol]) {
     stonkMap[symbol].sockets.forEach((socketId) => {
       sockets[socketId].emit('dataChanged', data);
@@ -80,7 +73,7 @@ const addTickers = (socket, list) => {
   each(list, (stonk) => {
     addTicker(socket, stonk);
   });
-}
+};
 
 io.on('connection', (socket) => {
   sockets[socket.id] = socket;
@@ -94,16 +87,27 @@ io.on('connection', (socket) => {
   });
 
   socket.on('loadList', (name, cb) => {
-    fs.readFile(`${__dirname}/lists/${name}.json`, (err, data) => {
-      if (err) {
-        cb([]);
-        return;
-      }
-      const jsonData = JSON.parse(data);
-      cb(jsonData.symbols);
-      addTickers(socket, jsonData.symbols);
+    loadList(name, (data) => {
+      cb(data.symbols);
+      addTickers(socket, data.symbols);
     });
   });
+
+  socket.on('loadDashboard', (name, cb) => {
+    loadDashboard(name, (data) => {
+      cb(data);
+      if (!data.lists) {
+        return;
+      }
+      data.lists.forEach((list) => {
+        addTickers(socket, list.symbols);
+      });
+    });
+  });
+});
+
+app.use((req, res) => {
+  res.sendFile(__dirname + '/dist/index.html');
 });
 
 http.listen(port, () => {

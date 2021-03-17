@@ -1043,10 +1043,10 @@ stealthy-require@^1.1.1:
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
   integrity sha1-NbCYdbT/SfJqd35QmzCQoyJr8ks=
 
-stocksocket@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/stocksocket/-/stocksocket-1.1.2.tgz#8bb3300696a0018455572e90ab1dac1352cf7658"
-  integrity sha512-hQ4JxVcPmaIwmejhvTOavRrzdSPzq1kp7s6Vs+jLqAluM7QyzGzVeJCnLcUp1fR9sHaHDBRYCPr2cte6yL81uw==
+stocksocket@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/stocksocket/-/stocksocket-1.2.1.tgz#36274f481cf9ba34ebb2596a7262b54a2749185d"
+  integrity sha512-quf0iiUu4+oFn8eV7oUW8jlW7caKV9HTHOVZweiLeqNRFod+8VXUN9KWD1Wi7NivHUGRjixHeURUqkF2RIfG4A==
   dependencies:
     puppeteer "^8.0.0"
 

@@ -4,20 +4,22 @@ import Textbox from 'common/Textbox';
 import Button from 'common/Button';
 import { useState, useReducer, useEffect } from 'react';
 import { addTickers, loadList } from 'StonkManager';
-import { StonkViewer } from 'StonkViewer';
+import { StonkViewer } from 'StonkDashboard/StonkViewer';
 import Row from 'common/layout/Row';
 import { Card } from 'common/layout/Card';
 
 const reducer = (state, action) => {
   switch (action.type) {
     case 'set':
-      const index = state.findIndex((stonk) => (stonk.symbol === action.data.symbol))
+      const index = state.findIndex(
+        (stonk) => stonk.symbol === action.data.symbol
+      );
       if (index > -1) {
-        const returnValue = [ ...state ];
+        const returnValue = [...state];
         returnValue[index] = { ...returnValue[index], ...action.data };
         return returnValue;
       } else {
-        return [ ...state, { ...action.data } ];
+        return [...state, { ...action.data }];
       }
     default:
       throw new Error();
@@ -31,12 +33,12 @@ export const StonkList = ({ name }) => {
     if (name) {
       loadList(name, setStonk);
     }
-  }, [name])
+  }, [name]);
 
   const setStonk = (data) => {
     dispatch({ type: 'set', data });
   };
-  
+
   const GridStyle = css`
     display: flex;
     flex-direction: row;
@@ -61,7 +63,11 @@ export const StonkList = ({ name }) => {
   return (
     <Card>
       <Row centered>
-        <Textbox value={symbol} onChanged={setSymbol} onSubmit={() => addStonk(symbol)} />
+        <Textbox
+          value={symbol}
+          onChanged={setSymbol}
+          onSubmit={() => addStonk(symbol)}
+        />
         <Button text="Add" onClick={() => addStonk(symbol)} />
       </Row>
       <div css={GridStyle}>

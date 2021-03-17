@@ -88,12 +88,13 @@ module.exports = {
       appMountId: 'root',
     }),
     new webpack.DefinePlugin({
-      SOCKET_URL: isDevServer ? '\'http://localhost:3000\'' : '',
+      SOCKET_URL: isDevServer ? "'http://localhost:3000'" : '',
     }),
   ],
   devServer: {
     contentBase: './server/dist',
     hot: true,
     open: true,
+    historyApiFallback: true,
   },
 };
