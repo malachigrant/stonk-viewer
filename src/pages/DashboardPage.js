@@ -16,11 +16,14 @@ export const DashboardPage = () => {
 
   const redirect = (path) => {
     history.push(path);
-  }
+  };
 
   return (
     <Column cs={Style} centered>
-      <Button text="Edit Dashboard" onClick={() => redirect(`/dashboard/${dashboardName}/edit`)} />
+      <Button
+        text="Edit Dashboard"
+        onClick={() => redirect(`/dashboard/${dashboardName}/edit`)}
+      />
       <StonkDashboard name={dashboardName} />
     </Column>
   );

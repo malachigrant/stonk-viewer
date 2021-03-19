@@ -2,7 +2,12 @@ const StockSocket = require('stocksocket');
 const yahoo = require('yahoo-finance');
 const each = require('async/each');
 const express = require('express');
-const { loadList, loadDashboard, createDashboard, readDashboard } = require('./StorageManager');
+const {
+  loadList,
+  loadDashboard,
+  createDashboard,
+  readDashboard,
+} = require('./StorageManager');
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
@@ -19,6 +24,10 @@ app.use('/admin', express.static(`${__dirname}/admin`));
 
 app.get('/admin/stonks', (req, res) => {
   res.send(`<pre>${JSON.stringify(stonkMap, null, 2)}</pre>`);
+});
+
+app.get('/admin/sockets', (req, res) => {
+  res.send(`<pre>${JSON.stringify(sockets, null, 2)}</pre>`);
 });
 
 const sockets = [];
@@ -76,6 +85,9 @@ const addTickers = (socket, list) => {
 };
 
 io.on('connection', (socket) => {
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
   sockets[socket.id] = socket;
   console.log('user connected');
   socket.on('addStonk', (symbol) => {
@@ -111,7 +123,7 @@ io.on('connection', (socket) => {
 
   socket.on('readDashboard', (name, cb) => {
     readDashboard(name, cb);
-  })
+  });
 });
 
 app.use((req, res) => {

@@ -1,6 +1,7 @@
 //* @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import Row from 'common/layout/Row';
+import { PropTypes } from 'prop-types';
 
 export const ButtonRow = ({ children }) => {
   const Style = css`
@@ -11,11 +12,11 @@ export const ButtonRow = ({ children }) => {
       margin-right: 0;
     }
   `;
-  return (
-    <Row cs={Style}>
-      {children}
-    </Row>
-  );
-}
+  return <Row cs={Style}>{children}</Row>;
+};
+
+ButtonRow.propTypes = {
+  children: PropTypes.any,
+};
 
 export default ButtonRow;

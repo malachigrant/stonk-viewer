@@ -10,6 +10,16 @@ const GlobalStyle = css`
     font-family: Arial;
     box-sizing: border-box;
   }
+  html,
+  body {
+    margin: 0;
+  }
 `;
 
-ReactDOM.render(<><Global styles={GlobalStyle} /><App /></>, document.getElementById('root'));
+ReactDOM.render(
+  <React.Fragment>
+    <Global styles={GlobalStyle} />
+    <App />
+  </React.Fragment>,
+  document.getElementById('root')
+);

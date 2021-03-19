@@ -9,6 +9,9 @@
       "version": "detect"
     }
   },
+  "globals": {
+    "SOCKET_URL": "readonly"
+  },
   "overrides": [
     {
       "files": ["__tests__/*.test.js"],

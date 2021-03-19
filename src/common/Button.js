@@ -17,11 +17,11 @@ const bgColorMap = {
   default: {
     main: colors.blue,
     hover: colors.lightBlue,
-    text: colors.white
-  }
-}
+    text: colors.white,
+  },
+};
 
-export const Button = ({ text, type, onClick }) => {
+export const Button = ({ text, cs, type, onClick }) => {
   const styleColor = bgColorMap[type] || bgColorMap.default;
   const Style = css`
     padding: 0.5em 0.25em;
@@ -39,16 +39,17 @@ export const Button = ({ text, type, onClick }) => {
     }
   `;
   return (
-    <div css={Style} onClick={() => onClick()}>
+    <div css={[Style, cs]} onClick={() => onClick()}>
       {text}
     </div>
   );
 };
 
 Button.propTypes = {
+  cs: PropTypes.object,
   text: PropTypes.string,
   onClick: PropTypes.func,
-  type: PropTypes.string
+  type: PropTypes.string,
 };
 
 export default Button;

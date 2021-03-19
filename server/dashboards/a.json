@@ -1,1 +1,6 @@
-{"lists":[{"name":"Stuff","symbols":["AAPL","TSLA","GOOG","AMZN"]},{"name":"Other Stuff","symbols":["VET.TO","BTC-CAD"]}]}
+{
+  "lists": [
+    { "name": "Stuff", "symbols": ["AAPL", "TSLA", "GOOG", "AMZN"] },
+    { "name": "Other Stuff", "symbols": ["VET.TO", "BTC-CAD"] }
+  ]
+}

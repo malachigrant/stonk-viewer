@@ -13,7 +13,7 @@
     "lint": "eslint .",
     "pretty": "prettier . --write",
     "client": "webpack-dev-server src/main.js",
-    "server": "nodemon server/main.js",
+    "server": "node server/main.js",
     "dev": "yarn start",
     "start": "concurrently \"yarn client\" \"yarn server\""
   },

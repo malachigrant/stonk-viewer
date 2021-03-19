@@ -33,15 +33,15 @@ const loadDashboard = (fileName, cb) => {
 
 const createDashboard = (fileName, data, cb) => {
   saveFile(`/dashboards/${fileName.toLowerCase()}.json`, data, cb);
-}
+};
 
 const readDashboard = (fileName, cb) => {
   loadFile(`/dashboards/${fileName.toLowerCase()}.json`, cb);
-}
+};
 
 module.exports = {
   loadList,
   loadDashboard,
   createDashboard,
-  readDashboard
+  readDashboard,
 };

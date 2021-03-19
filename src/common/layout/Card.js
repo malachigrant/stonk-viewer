@@ -18,6 +18,7 @@ export const Card = ({ children, centered = true, padding }) => {
 Card.propTypes = {
   children: PropTypes.any,
   padding: PropTypes.string,
+  centered: PropTypes.bool,
 };
 
 export default Card;

@@ -5,6 +5,7 @@ import DashboardPage from 'pages/DashboardPage';
 import HomePage from 'pages/HomePage';
 import CreateDashboardPage from 'pages/CreateDashboardPage';
 import Column from 'common/layout/Column';
+import AppBar from 'AppBar';
 
 export const App = () => {
   const Title = css`
@@ -16,6 +17,7 @@ export const App = () => {
   return (
     <Router>
       <Column centered>
+        <AppBar />
         <div css={Title}>Stonk Monitor</div>
         <Switch>
           <Route exact path="/">
@@ -24,7 +26,7 @@ export const App = () => {
           <Route path="/dashboard/create">
             <CreateDashboardPage />
           </Route>
-          <Route path={"/dashboard/:dashboardName/edit"}>
+          <Route path={'/dashboard/:dashboardName/edit'}>
             <CreateDashboardPage />
           </Route>
           <Route path="/dashboard/:dashboardName">

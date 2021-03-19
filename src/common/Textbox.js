@@ -2,7 +2,15 @@
 import { jsx, css } from '@emotion/core';
 import { PropTypes } from 'prop-types';
 
-export const Textbox = ({ value, required, label, onChange, onSubmit, inputProcessor = (input) => input, ...rest }) => {
+export const Textbox = ({
+  value,
+  required,
+  label,
+  onChange,
+  onSubmit,
+  inputProcessor = (input) => input,
+  ...rest
+}) => {
   const Style = css`
     padding: 0.5em 0.25em;
     ${label && 'margin-top: 0.5em;'}
@@ -14,10 +22,12 @@ export const Textbox = ({ value, required, label, onChange, onSubmit, inputProce
   `;
 
   const LabelStyle = css`
-    ${required && `&:after {
+    ${required &&
+    `&:after {
       content: '*';
       color: #f00;
-    }`}`;
+    }`}
+  `;
   const textBox = (
     <input
       type="text"
@@ -36,7 +46,10 @@ export const Textbox = ({ value, required, label, onChange, onSubmit, inputProce
     <div>
       <div css={LabelStyle}>{label}</div>
       {textBox}
-    </div>) : textBox;
+    </div>
+  ) : (
+    textBox
+  );
 };
 
 Textbox.propTypes = {
@@ -45,6 +58,7 @@ Textbox.propTypes = {
   onChange: PropTypes.func,
   onSubmit: PropTypes.func,
   inputProcessor: PropTypes.func,
+  required: PropTypes.bool,
 };
 
 export default Textbox;
