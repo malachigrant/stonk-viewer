@@ -12,9 +12,9 @@ export const Row = ({ children, centered, cs }) => {
 };
 
 Row.propTypes = {
-  children: PropTypes.array,
-  centered: PropTypes.boolean,
-  cs: PropTypes.string,
+  children: PropTypes.any,
+  centered: PropTypes.bool,
+  cs: PropTypes.object,
 };
 
 export default Row;

@@ -21,7 +21,6 @@ export const StonkDashboard = ({ name }) => {
   const [stonkDataMap, dispatch] = useReducer(reducer, {});
 
   const dataChanged = (data) => {
-    console.log(data);
     dispatch({ type: 'set', symbol: data.symbol, data });
   };
   useEffect(() => {

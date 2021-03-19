@@ -3,6 +3,7 @@ import { jsx, css } from '@emotion/core';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import DashboardPage from 'pages/DashboardPage';
 import HomePage from 'pages/HomePage';
+import CreateDashboardPage from 'pages/CreateDashboardPage';
 import Column from 'common/layout/Column';
 
 export const App = () => {
@@ -19,6 +20,12 @@ export const App = () => {
         <Switch>
           <Route exact path="/">
             <HomePage />
+          </Route>
+          <Route path="/dashboard/create">
+            <CreateDashboardPage />
+          </Route>
+          <Route path={"/dashboard/:dashboardName/edit"}>
+            <CreateDashboardPage />
           </Route>
           <Route path="/dashboard/:dashboardName">
             <DashboardPage />

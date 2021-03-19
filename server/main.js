@@ -2,7 +2,7 @@ const StockSocket = require('stocksocket');
 const yahoo = require('yahoo-finance');
 const each = require('async/each');
 const express = require('express');
-const { loadList, loadDashboard } = require('./StorageManager');
+const { loadList, loadDashboard, createDashboard, readDashboard } = require('./StorageManager');
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http, {
@@ -104,6 +104,14 @@ io.on('connection', (socket) => {
       });
     });
   });
+
+  socket.on('createDashboard', (name, data, cb) => {
+    createDashboard(name, data, cb);
+  });
+
+  socket.on('readDashboard', (name, cb) => {
+    readDashboard(name, cb);
+  })
 });
 
 app.use((req, res) => {

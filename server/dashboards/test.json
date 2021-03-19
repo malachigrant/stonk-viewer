@@ -1,6 +1,1 @@
-{
-  "lists": [
-    { "name": "Tech", "symbols": ["GOOG", "AAPL", "MSFT", "AMZN", "TSLA"] },
-    { "name": "Other", "symbols": ["BMO", "VET.TO", "BTC-CAD"] }
-  ]
-}
+{"lists":[{"name":"Tech","symbols":["AAPL","TSLA","AMZN"]},{"name":"Other","symbols":["BMO","VET.TO"]}]}

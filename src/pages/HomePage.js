@@ -2,6 +2,8 @@
 import { jsx, css } from '@emotion/core';
 import { useState } from 'react';
 import Textbox from 'common/Textbox';
+import Button from 'common/Button';
+import Card from 'common/layout/Card';
 import { Redirect } from 'react-router-dom';
 
 export const HomePage = () => {
@@ -13,16 +15,19 @@ export const HomePage = () => {
   const [redirect, setRedirect] = useState(null);
 
   return (
-    <div css={Style}>
+    <Card>
       <Textbox
+        label={"Load Dashboard"}
+        hint={'Dashboard Name'}
         value={dashboardName}
-        onChanged={setDashboardName}
+        onChange={setDashboardName}
         onSubmit={() => {
           setRedirect(`/dashboard/${dashboardName}`);
         }}
       />
+      <Button text={'Create Dashboard'} onClick={() => setRedirect('/dashboard/create')} />
       {redirect && <Redirect to={redirect} />}
-    </div>
+    </Card>
   );
 };
 

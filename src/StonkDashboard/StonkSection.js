@@ -33,8 +33,8 @@ export const StonkSection = ({ data, stonkMap }) => {
 };
 
 StonkSection.propTypes = {
-  data: PropTypes.Object,
-  stonkMap: PropTypes.Object,
+  data: PropTypes.object,
+  stonkMap: PropTypes.object,
 };
 
 export default StonkSection;

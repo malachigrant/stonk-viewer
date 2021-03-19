@@ -1,17 +1,40 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core';
 import { PropTypes } from 'prop-types';
+import { colors } from 'common/styles';
 
-export const Button = ({ text, onClick }) => {
+const bgColorMap = {
+  confirm: {
+    main: colors.green,
+    hover: colors.lightGreen,
+    text: colors.white,
+  },
+  cancel: {
+    main: colors.red,
+    hover: colors.lightRed,
+    text: colors.white,
+  },
+  default: {
+    main: colors.blue,
+    hover: colors.lightBlue,
+    text: colors.white
+  }
+}
+
+export const Button = ({ text, type, onClick }) => {
+  const styleColor = bgColorMap[type] || bgColorMap.default;
   const Style = css`
     padding: 0.5em 0.25em;
-    margin: 0.5em;
-    border-radius: 0.2em;
+    border-radius: 1em;
     border: 1px solid #ddd;
+    margin-top: 1em;
     width: 150px;
     text-align: center;
     font-family: Arial;
+    background-color: ${styleColor.main};
+    color: ${styleColor.text};
     &:hover {
+      background-color: ${styleColor.hover};
       cursor: pointer;
     }
   `;
@@ -24,7 +47,8 @@ export const Button = ({ text, onClick }) => {
 
 Button.propTypes = {
   text: PropTypes.string,
-  onClick: PropTypes.function,
+  onClick: PropTypes.func,
+  type: PropTypes.string
 };
 
 export default Button;

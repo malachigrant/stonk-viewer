@@ -13,9 +13,9 @@ export const Column = ({ children, centered, cs }) => {
 };
 
 Column.propTypes = {
-  children: PropTypes.array,
-  centered: PropTypes.boolean,
-  cs: PropTypes.string,
+  children: PropTypes.any,
+  centered: PropTypes.bool,
+  cs: PropTypes.object,
 };
 
 export default Column;
