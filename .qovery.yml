@@ -1,0 +1,11 @@
+---
+application:
+  name: "stonk-viewer"
+  project: "stonk-viewer"
+  organization: "QoveryCommunity"
+routers:
+- name: "main-stonk-viewer"
+  routes:
+  - application_name: "stonk-viewer"
+    paths:
+    - "/*"
