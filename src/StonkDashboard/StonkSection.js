@@ -4,20 +4,18 @@ import PropTypes from 'prop-types';
 import Card from 'common/layout/Card';
 import Row from 'common/layout/Row';
 import StonkViewer from 'StonkDashboard/StonkViewer';
+import { useGlobal } from 'GlobalState';
 
 export const StonkSection = ({ data, stonkMap }) => {
+  const { size } = useGlobal();
   const Title = css`
     font-size: 1.5em;
     padding-bottom: 0.5em;
   `;
 
   const StonkList = css`
-    & > div {
-      margin-left: 1em;
-    }
-    & > div:first-of-type {
-      margin-left: 0em;
-    }
+    flex-wrap: wrap;
+    gap: 1em;
   `;
 
   return (
@@ -25,7 +23,7 @@ export const StonkSection = ({ data, stonkMap }) => {
       <div css={Title}>{data.name}</div>
       <Row cs={StonkList}>
         {data.symbols.map((symbol, i) => {
-          return <StonkViewer {...stonkMap[symbol]} symbol={symbol} key={i} />;
+          return <StonkViewer size={size} {...stonkMap[symbol]} symbol={symbol} key={i} />;
         })}
       </Row>
     </Card>

@@ -7,17 +7,36 @@ const roundTo = (num, precision) => {
   return Math.round(num * mult) / mult;
 };
 
-export const StonkViewer = ({ symbol, price, previousClose }) => {
+const sizeMap = {
+  small: {
+    symbol: '1.25em',
+    price: '1em',
+    maxWidth: '120px'
+  },
+  large: {
+    symbol: '2em',
+    price: '2em',
+    minWidth: '300px'
+  }
+}
+
+export const StonkViewer = ({ symbol, price, previousClose, size = 'small' }) => {
   const Style = css`
     padding: 0.5em;
     border-radius: 0.2em;
     display: flex;
     flex-direction: column;
     border: 1px solid #ddd;
-    min-width: 120px;
+    min-width: ${sizeMap[size].minWidth};
   `;
   const ColorStyle = css`
     color: ${price > previousClose ? '#00dd00' : '#dd0000'};
+  `;
+  const SymbolStyle = css`
+    font-size: ${sizeMap[size].symbol};
+  `;
+  const PriceStyle = css`
+    font-size: ${sizeMap[size].price};
   `;
 
   const priceChange = roundTo(price - previousClose, 2);
@@ -25,9 +44,9 @@ export const StonkViewer = ({ symbol, price, previousClose }) => {
 
   return (
     <div css={Style}>
-      <div>{`${symbol}${price ? ` - ${price}` : ''}`}</div>
+      <div css={SymbolStyle}>{`${symbol}${price ? ` - ${price}` : ''}`}</div>
       {previousClose ? (
-        <div css={ColorStyle}>{`${priceChange} (${pct}%)`}</div>
+        <div css={[ColorStyle, PriceStyle]}>{`${priceChange} (${pct}%)`}</div>
       ) : (
         'Loading...'
       )}
@@ -39,6 +58,7 @@ StonkViewer.propTypes = {
   symbol: PropTypes.string.isRequired,
   price: PropTypes.number,
   previousClose: PropTypes.number,
+  size: PropTypes.string,
 };
 
 export default StonkViewer;

@@ -2,7 +2,7 @@
 import { jsx, css } from '@emotion/core';
 import Button from '../common/Button';
 
-export const AppBarButton = ({ ...rest }) => {
+export const AppBarButton = ({ cs, ...rest }) => {
   const OverrideStyle = css`
     border-radius: 0;
     border-width: 0;
@@ -10,7 +10,7 @@ export const AppBarButton = ({ ...rest }) => {
     width: auto;
     padding: 0.5em 1em;
   `;
-  return <Button cs={OverrideStyle} {...rest} />;
+  return <Button cs={[OverrideStyle, cs]} {...rest} />;
 };
 
 export default AppBarButton;

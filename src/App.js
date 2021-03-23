@@ -6,6 +6,7 @@ import HomePage from 'pages/HomePage';
 import CreateDashboardPage from 'pages/CreateDashboardPage';
 import Column from 'common/layout/Column';
 import AppBar from 'AppBar';
+import { SettingsPage } from 'pages/SettingsPage';
 
 export const App = () => {
   const Title = css`
@@ -22,6 +23,9 @@ export const App = () => {
         <Switch>
           <Route exact path="/">
             <HomePage />
+          </Route>
+          <Route path="/settings">
+            <SettingsPage />
           </Route>
           <Route path="/dashboard/create">
             <CreateDashboardPage />

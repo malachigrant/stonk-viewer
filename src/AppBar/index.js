@@ -5,17 +5,25 @@ import { AppBarButton } from './AppBarButton';
 import { useHistory } from 'react-router-dom';
 
 export const AppBar = () => {
-  const HomeStyle = css`
+  const Left = css`
     margin-right: auto;
+  `;
+  const Right = css`
+    margin-left: auto;
   `;
   const history = useHistory();
 
   return (
     <Row>
       <AppBarButton
-        css={HomeStyle}
+        cs={Left}
         text={'Home'}
         onClick={() => history.push('/')}
+      />
+      <AppBarButton
+        cs={Right}
+        text={'Settings'}
+        onClick={() => history.push('/settings')}
       />
     </Row>
   );

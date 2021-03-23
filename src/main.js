@@ -1,9 +1,9 @@
 /** @jsx jsx */
 import { jsx, css, Global } from '@emotion/core';
 import ReactDOM from 'react-dom';
-import React from 'react';
 
 import App from 'App';
+import GlobalStateProvider from 'GlobalState';
 
 const GlobalStyle = css`
   * {
@@ -17,9 +17,9 @@ const GlobalStyle = css`
 `;
 
 ReactDOM.render(
-  <React.Fragment>
+  <GlobalStateProvider>
     <Global styles={GlobalStyle} />
     <App />
-  </React.Fragment>,
+  </GlobalStateProvider>,
   document.getElementById('root')
 );
